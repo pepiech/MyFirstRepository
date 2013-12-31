@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+    <title>TODO App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+    <script src="test.js"></script>
+    </head>
+    <body onload="onBodyLoad()">
+        <div data-role="header" data-position="inline" data-theme="b">
+            <a href="#" data-theme="c" data-icon="delete" iconpos="notext" data-position="inline" data-rel="dialog" id="clear">Clear</a>
+            <h1>TODO</h1>
+            <a href="add_todo.html" data-icon="add" iconpos="notext" data-position="inline" data-rel="dialog">Add</a>
+        </div><p>
+        </p><div class="content-primary" style="margin:3px;">  
+            <ul data-role="listview" data-inset="true" data-split-icon="minus" data-split-theme="d" id="todo_list">
+            </ul>
+        </div> 
+        <div data-role="footer" data-position="fixed" data-theme="b" style="text-align:center;padding:5px 0px;">
+            <a href="http://www.amitpatil.me/?s=iphone+ipad" data-theme="b" data-icon="star">More iphone Apps</a>
+        </div>
+    </body>
+</html>
