@@ -20,8 +20,6 @@
             $("#gr").attr("src","zabava/gird"+id+".png");
         }
 
-
-
         $.fn.soccer = function (options) {
             var opts = $.extend({}, { width: 360, height: 510, step: 30, homeComputer: true, homeUI: 0, awayComputer: true, awayUI: 0 }, options);
             $(this).click(onClick);
@@ -54,12 +52,6 @@
                     isRobotTurn = true;
                 context = drawingCanvas.getContext('2d');
                 context2 = drawingCanvas2.getContext('2d');
-                if (!opts.homeComputer && homeTeamID > 0 && homeTeamID != awayTeamID) {
-                    fxARP(homeTeamID, -10);
-                }
-                if (!opts.awayComputer && awayTeamID > 0 && homeTeamID != awayTeamID) {
-                    fxARP(awayTeamID, -10);
-                }
                 $('#keyInput').keydown(function (event) {
                     keyDown(event);
                 });
@@ -702,8 +694,7 @@
                     $(".score").addClass("gameover");
                     gameOver = true;
 
-                    fxGR(homeTeamID, awayTeamID, scoreHome, scoreAway, hg, ag, !opts.homeComputer, !opts.awayComputer);
-                    $("#saved").text("výsledek uložen");
+                    //$("#saved").text("výsledek uložen");
                 }
 
             };

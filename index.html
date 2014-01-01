@@ -5,15 +5,20 @@
     <title>TODO App</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
     <script src="fc.js"></script>
     <script type="text/javascript">
-        
-        var homeTeamName = 'anonym'; var awayTeamName = '1. FK Příbram';var homeTeamID = '0'; var awayTeamID = '22';var hg = 'False'; var ag = 'False';
+
+        var homeTeamName = 'anonym';
+        var awayTeamName = '1. FK Příbram';
+        var homeTeamID = '0';
+        var awayTeamID = '22';
+        var hg = 'False'; 
+        var ag = 'False';
         function start() { 
-             $("#playground").soccer({homeComputer: false, homeUI: 1, awayUI: 45});
+             $("#playground").soccer({homeUI: 45, awayUI: 45});
              $("#matchStart").hide();
              //$("#matchEnd").show();
         }
