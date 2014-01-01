@@ -52,14 +52,6 @@
                     isRobotTurn = true;
                 context = drawingCanvas.getContext('2d');
                 context2 = drawingCanvas2.getContext('2d');
-                $('#keyInput').keydown(function (event) {
-                    keyDown(event);
-                });
-
-                $("#playground").click(function () {
-                    document.getElementById("keyInput").focus();
-                });
-
                 start(null);
             }
 
@@ -87,7 +79,6 @@
 
 
             function start(coord) {
-                document.getElementById("keyInput").focus();
                 initField();
                 allCoord = {};
                 points = [];
@@ -108,51 +99,7 @@
                     setTimeout(function () { computerPlay(lastCoord); }, 1000);
 
                 }
-            }
-
-            function keyDown(event) {
-                if (isRobotTurn || gameOver)
-                    return;
-                //Q nebo num 7
-                if (event.keyCode == 81 || event.keyCode == 103) {
-                    if (lastCoord[0] - 30 > 0)
-                        playerMoves([lastCoord[0] - 30, lastCoord[1] - 30]);
-                }
-                //W nebo num 8
-                else if (event.keyCode == 87 || event.keyCode == 104) {
-                    playerMoves([lastCoord[0], lastCoord[1] - 30]);
-                }
-                //E nebo num 9
-                else if (event.keyCode == 69 || event.keyCode == 105) {
-                    if (lastCoord[0] + 30 < 366)
-                        playerMoves([lastCoord[0] + 30, lastCoord[1] - 30]);
-                }
-                //A nebo num 4
-                else if (event.keyCode == 65 || event.keyCode == 100) {
-                    if (lastCoord[0] - 30 > 0)
-                        playerMoves([lastCoord[0] - 30, lastCoord[1]]);
-                }
-                //D nebo num 6
-                else if (event.keyCode == 68 || event.keyCode == 102) {
-                    if (lastCoord[0] + 30 < 366)
-                        playerMoves([lastCoord[0] + 30, lastCoord[1]]);
-                }
-                //Y nebo Z nebo num 1
-                else if (event.keyCode == 89 || event.keyCode == 90 || event.keyCode == 97) {
-                    if (lastCoord[0] - 30 > 0)
-                        playerMoves([lastCoord[0] - 30, lastCoord[1] + 30]);
-                }
-                //X nebo num 2
-                else if (event.keyCode == 88 || event.keyCode == 98) {
-                    playerMoves([lastCoord[0], lastCoord[1] + 30]);
-                }
-                //C nebo num 3
-                else if (event.keyCode == 67 || event.keyCode == 99) {
-                    if (lastCoord[0] + 30 < 366)
-                        playerMoves([lastCoord[0] + 30, lastCoord[1] + 30]);
-                }
-
-            }
+            }            
 
             function onClick(e) {
                 if (isRobotTurn || gameOver)
