@@ -4,11 +4,11 @@
     <head>
     <title>TODO App</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
     <script src="fc.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
     <script type="text/javascript">
 
         var homeTeamName = 'anonym';
@@ -17,14 +17,15 @@
         var awayTeamID = '22';
         var hg = 'False'; 
         var ag = 'False';
-        function start() { 
-             $("#playground").soccer({homeUI: 45, awayUI: 45});
+        function start() {
+            $("#playground").soccer({ homeComputer:false, homeUI: 45, awayUI: 45 });
              $("#matchStart").hide();
              //$("#matchEnd").show();
         }
 
-        function toggleEmoce(){
-        }
+        $(document).bind("mobileinit", function (event) {
+            $.extend($.mobile.zoom, { locked: false, enabled: true });
+        });
 
     </script>	
     <style>
@@ -115,12 +116,6 @@
                             <option value="500" selected="selected">normální</option>
                             <option value="10">velká</option>
                         </select>
-                    </td>
-                </tr>
-                <tr style="display:none">
-                    <td>emoce:</td>
-                    <td>
-                        <input type="checkbox" checked="true" onchange="toggleEmoce()" />
                     </td>
                 </tr>
             </table>
