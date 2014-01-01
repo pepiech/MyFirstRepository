@@ -8,18 +8,140 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
-    <script src="test.js"></script>
+    <script src="fc.js"></script>
+    <script type="text/javascript">
+        
+        var homeTeamName = 'anonym'; var awayTeamName = '1. FK Příbram';var homeTeamID = '0'; var awayTeamID = '22';var hg = 'False'; var ag = 'False';
+        function start() { 
+             $("#playground").soccer({homeComputer: false, homeUI: 1, awayUI: 45});
+             $("#matchStart").hide();
+             //$("#matchEnd").show();
+        }
+
+        function toggleEmoce(){
+        }
+
+    </script>	
+    <style>
+        div.fcgame {float:left; width:402px; border:1px solid black;height:530px;}
+        div.gameinfo {float:left; border:1px solid black;text-align:center; width:200px; margin: 0 0 10px 10px}
+        div.team {font-size:14px;color:Red;}
+        div.time {font-size:14px;color:Red;}
+        .score {text-align:center;font-size:45px; padding:20px}
+        .score.gameover {color:Red;}
+    </style>
     </head>
-    <body onload="onBodyLoad()">
-        <div data-role="header" data-position="inline" data-theme="b">
-            <a href="#" data-theme="c" data-icon="delete" iconpos="notext" data-position="inline" data-rel="dialog" id="clear">Clear</a>
-            <h1>TODO</h1>
-            <a href="add_todo.html" data-icon="add" iconpos="notext" data-position="inline" data-rel="dialog">Add</a>
-        </div><p>
-        </p><div class="content-primary" style="margin:3px;">  
-            <ul data-role="listview" data-inset="true" data-split-icon="minus" data-split-theme="d" id="todo_list">
-            </ul>
-        </div> 
+    <body>
+    <div class="post box_in">
+        <div style="clear:both"></div>
+        <input type="text" id="keyInput" style="position:absolute;left:-100px;width:1px" />
+        <div class="fcgame">
+            <img src="zabava/pitch1.jpg" style="position:relative; top:0px;left:0px;z-index:4;width:402px; height:530px;" width="402" height="530" />
+            <img src="zabava/line1.png" style="position:relative; top:-530px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
+            <img src="zabava/gird1.png" id="gr" style="position:relative; top:-1060px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
+            <img src="zabava/branky.png" id="Img1" style="position:relative; top:-1591px;left:0px;z-index:9;width:402px; height:530px;" width="402" height="530" />
+            <canvas id="background" width="380" height="530" style="position:relative; top:-2135px;left:16px;z-index:10"></canvas>
+            <canvas id="playground" width="380" height="530" style="position:relative; top:-2666px;left:16px;z-index:11"></canvas>
+        </div>
+        <div class="gameinfo">        
+            <table class="scoreboard">   
+                <tr>
+                    <td colspan="3" class="score"><span id="homeScore">0</span>:<span id="awayScore">0</span></td>
+                </tr>     
+                <tr>
+                    <td class="team"><img id="ball" src="zabava/lopta.png" alt="" width="10" height="10" /> domácí</td>
+                    <td class="time" id="timer">0 min.</td>
+                    <td class="team">hosté <img id="ball2" src="zabava/lopta2.png" alt="" width="10" height="10" /></td>
+                </tr>  
+                <tr>
+                    <td id="he" style="display:block;height:24px;"></td>
+                    <td id="me"></td>
+                    <td id="ae"></td>
+                </tr>           
+            </table>
+            
+            <table>
+                <tr>
+                    <td><span id="hdm">0</span>%</td>
+                    <td>držení míče</td>
+                    <td><span id="adm">0</span>%</td>
+                </tr>
+                <tr>
+                    <td><span id="hroh">0</span></td>
+                    <td>rohy</td>
+                    <td><span id="aroh">0</span></td>
+                </tr>
+                <tr>
+                    <td><span id="hpri">0</span></td>
+                    <td>přihrávky</td>
+                    <td><span id="apri">0</span></td>
+                </tr>
+                <tr>
+                    <td><span id="hzak">0</span></td>
+                    <td>zakopnutý míč</td>
+                    <td><span id="azak">0</span></td>
+                </tr>
+            </table>
+            <span id="saved" style="font-weight:bold;"></span>
+            <input type="button" onclick="start()" id="matchStart" value="Zahájit utkání" />
+            <input type="button" onclick="end()" id="matchEnd" value="Ukončit utkání" style="display:none" />
+            <br />
+            <br />
+        </div>
+
+
+        <div class="gameinfo">
+             <table>
+                <tr>
+                    <td>mřížka:</td>
+                    <td>
+                        <select id="grid" onchange="changeGrid(this.options[this.selectedIndex].value)">
+                            <option value="0">žádná</option>
+                            <option value="1" selected="selected">malé tečky</option>
+                            <option value="2">tečky</option>
+                            <option value="3">plná</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>rychlost:</td>
+                    <td>
+                        <select id="speed" onchange="changeSpeed(this.options[this.selectedIndex].value)">
+                            <option value="1500">pomalá</option>
+                            <option value="500" selected="selected">normální</option>
+                            <option value="10">velká</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr style="display:none">
+                    <td>emoce:</td>
+                    <td>
+                        <input type="checkbox" checked="true" onchange="toggleEmoce()" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+
+        
+       
+                
+        <div style="display:none;">
+            <img src="zabava/goaltop.png" id="goalTopNet" alt="" />
+            <img src="zabava/goalbottom.png" id="goalBottomNet" alt="" />
+            <img src="images/smiles/x.gif" id="Img2" style="display:none;" alt="" />
+            <img src="images/smiles/gool.gif" id="sgool" style="display:none;" alt="" />
+            <img src="images/smiles/potlesk.gif" id="spotlesk" style="display:none;" alt="" />
+            <img src="images/smiles/nahoru.gif" id="snahoru" style="display:none;" alt=""  />
+        </div>
+
+        <div style="clear:both">
+        </div>
+
+
+    </div>
+        
+        
         <div data-role="footer" data-position="fixed" data-theme="b" style="text-align:center;padding:5px 0px;">
             <a href="http://www.amitpatil.me/?s=iphone+ipad" data-theme="b" data-icon="star">More iphone Apps</a>
         </div>
