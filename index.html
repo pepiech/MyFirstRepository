@@ -1,148 +1,385 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html>
+﻿<!DOCTYPE html> 
+<html> 
     <head>
-    <title>TODO App</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=1">
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
-    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="fc.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
-    <script type="text/javascript">
-
-        var homeTeamName = 'anonym';
-        var awayTeamName = '1. FK Příbram';
-        var homeTeamID = '0';
-        var awayTeamID = '22';
-        var hg = 'False'; 
-        var ag = 'False';
-        function start() {
-            $("#playground").soccer({ homeComputer:false, homeUI: 45, awayUI: 45 });
-             $("#matchStart").hide();
-             //$("#matchEnd").show();
-        }
-
-        $(document).bind("mobileinit", function (event) {
-            $.extend($.mobile.zoom, { locked: false, enabled: true });
-        });
-
-    </script>	
-    <style>
-        div.fcgame {float:left; width:402px; border:1px solid black;height:530px;}
-        div.gameinfo {float:left; border:1px solid black;text-align:center; width:200px; margin: 0 0 10px 10px}
-        div.team {font-size:14px;color:Red;}
-        div.time {font-size:14px;color:Red;}
-        .score {text-align:center;font-size:45px; padding:20px}
-        .score.gameover {color:Red;}
-    </style>
+        <title>Soccer League</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="source/common.js"></script>
+        <script type="text/javascript" src="source/duel.js"></script>
+        <script type="text/javascript" src="source/club.js"></script>
+        <script type="text/javascript" src="source/league.js"></script>
+        <script type="text/javascript" src="source/leaguePage.js"></script>
+        <script type="text/javascript" src="source/matchPage.js"></script>
+        <script type="text/javascript" src="source/editClubPage.js"></script>
+        <script type="text/javascript" src="source/game.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+        <link rel="stylesheet" href="source/styles.css" />
+        
     </head>
-    <body>
-    <div class="post box_in">
-        <div style="clear:both"></div>
-        <div class="fcgame">
-            <img src="zabava/pitch1.jpg" style="position:relative; top:0px;left:0px;z-index:4;width:402px; height:530px;" width="402" height="530" />
-            <img src="zabava/line1.png" style="position:relative; top:-530px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
-            <img src="zabava/gird1.png" id="gr" style="position:relative; top:-1060px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
-            <img src="zabava/branky.png" id="Img1" style="position:relative; top:-1591px;left:0px;z-index:9;width:402px; height:530px;" width="402" height="530" />
-            <canvas id="background" width="380" height="530" style="position:relative; top:-2135px;left:16px;z-index:10"></canvas>
-            <canvas id="playground" width="380" height="530" style="position:relative; top:-2666px;left:16px;z-index:11"></canvas>
+    <body class="ui-mini">
+        <div data-role="page" id="leaguePage" data-title="League Table">
+	        <div data-role="header" data-theme="b">
+		        <h1 id="leagueTitle"></h1>
+		        <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-notext ui-btn-right">Settings</a>		        
+	        </div>
+	        <div data-role="content">	
+		        <div id="leagueHolder">
+                    <table id="leagueTable" data-mode="table" data-role="table" class="ui-responsive league-table">
+                      <thead>
+                        <tr>
+                          <th data-priority="persist"><abbr title="Rank"></abbr></th>
+                          <th data-priority="persist"></th>
+                          <th data-priority="2"><abbr title="Matches">M</abbr></th>
+                          <th data-priority="2"><abbr title="Wins">W</abbr></th>
+                          <th data-priority="3"><abbr title="Draws">D</abbr></th>
+                          <th data-priority="4">L</th>
+                          <th data-priority="5">Score</th>
+                          <th data-priority="persist">P</th>
+                        </tr>
+                      </thead>
+                      <tbody id="leagueTableBody">
+                      </tbody>
+                    </table>
+
+		            <p id="leagueNextMatch"></p>
+                    
+                    <div class="ui-grid-b ui-responsive">
+                        <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-forward ui-btn-icon-left" id="nextMatch">Next Match</button></div>
+                        <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left" id="resultMatch">Result</button></div>
+                        <div class="ui-block-b"><button class="ui-btn ui-corner-all ui-icon-eye ui-btn-icon-left" id="viewMatch">View Match</button></div>
+                        <div class="ui-block-c"><button class="ui-btn ui-corner-all ui-icon-video ui-btn-icon-left" id="playMatch">Play Match</button></div>
+                    </div>
+                    
+                    
+                    <div class="ui-field-contain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <a href="#leaguePage" class="ui-btn ui-btn-inline ui-shadow ui-btn-active">Table</a>
+		                    <a href="#matchPage" class="ui-btn ui-btn-inline ui-shadow">Matches</a>
+                        </fieldset>
+                    </div>
+
+		            
+                </div>
+		        <div id="leagueEmptyHolder" style="display:none;">
+                    <p>There aren't any teams in your league.
+		                <a href="#editTeams" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-icon-bullets ui-btn-icon-left">Edit Teams</a>
+                    </p>
+                </div>
+                <div id="leagueEnded" style="display:none;">
+                    <p>League has ended.  
+                        <button class="ui-btn ui-corner-all ui-shadow ui-btn-inline" id="leagueRestart">Restart league</button> 
+                    </p>               
+                </div>
+	        </div>
+
+	        <div data-role="footer" data-theme="b">
+		        <h4>Page Footer</h4>
+	        </div>
         </div>
-        <div class="gameinfo">        
-            <table class="scoreboard">   
-                <tr>
-                    <td colspan="3" class="score"><span id="homeScore">0</span>:<span id="awayScore">0</span></td>
-                </tr>     
-                <tr>
-                    <td class="team"><img id="ball" src="zabava/lopta.png" alt="" width="10" height="10" /> domácí</td>
-                    <td class="time" id="timer">0 min.</td>
-                    <td class="team">hosté <img id="ball2" src="zabava/lopta2.png" alt="" width="10" height="10" /></td>
-                </tr>  
-                <tr>
-                    <td id="he" style="display:block;height:24px;"></td>
-                    <td id="me"></td>
-                    <td id="ae"></td>
-                </tr>           
-            </table>
+
+        <div data-role="page" id="matchPage">
+	        <div data-role="header" data-theme="b">
+		        <h1>Matches</h1>
+		        <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-notext">Settings</a>		        
+	        </div>
+	        <div data-role="content">	
+                <table id="matchesTable" data-mode="table" data-role="table" class="matches-table">
+                    <thead>
+                    <tr>
+                        <th data-priority="persist"></th>
+                        <th data-priority="persist"></th>
+                        <th data-priority="persist"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="matchesHolder">
+                    </tbody>
+                </table>
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <a href="#leaguePage" class="ui-btn ui-btn-inline ui-shadow">Table</a>
+		                <a href="#matchPage" class="ui-btn ui-btn-inline ui-shadow ui-btn-active">Matches</a>
+                    </fieldset>
+                </div>
+	        </div>
+	        <div data-role="footer" data-theme="b">
+		        <h4>Page Footer</h4>
+	        </div>
+        </div>
+        
+        <div data-role="page" id="gamePage">
+            <div data-role="header" data-theme="b">
+		        <h1>Soccer League</h1>
+		        <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-notext ui-btn-right">Settings</a>		        
+	        </div>
+
+	        <div data-role="content">	
+		        <div class="fcgame">
+                    <img src="zabava/pitch1.jpg" style="position:relative; top:0px;left:0px;z-index:4;width:402px; height:530px;" width="402" height="530" />
+                    <img src="zabava/line1.png" style="position:relative; top:-530px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
+                    <img src="zabava/gird1.png" id="gr" style="position:relative; top:-1060px;left:0px;z-index:8;width:402px; height:530px;" width="402" height="530" />
+                    <img src="zabava/branky.png" id="Img1" style="position:relative; top:-1591px;left:0px;z-index:9;width:402px; height:530px;" width="402" height="530" />
+                    <canvas id="background" width="380" height="530" style="position:relative; top:-2135px;left:16px;z-index:10"></canvas>
+                    <canvas id="playground" width="380" height="530" style="position:relative; top:-2666px;left:16px;z-index:11"></canvas>
+                </div>	
+
+                <div class="gameinfo">        
+                    <table class="scoreboard">   
+                        <tr>
+                            <td colspan="3" class="score"><span id="homeScore">0</span>:<span id="awayScore">0</span></td>
+                        </tr>     
+                        <tr>
+                            <td class="team"><img id="ball" src="zabava/lopta.png" alt="" width="10" height="10" /> domácí</td>
+                            <td class="time" id="timer">0 min.</td>
+                            <td class="team">hosté <img id="ball2" src="zabava/lopta2.png" alt="" width="10" height="10" /></td>
+                        </tr>  
+                        <tr>
+                            <td id="he" style="display:block;height:24px;"></td>
+                            <td id="me"></td>
+                            <td id="ae"></td>
+                        </tr>           
+                    </table>
             
-            <table>
-                <tr>
-                    <td><span id="hdm">0</span>%</td>
-                    <td>držení míče</td>
-                    <td><span id="adm">0</span>%</td>
-                </tr>
-                <tr>
-                    <td><span id="hroh">0</span></td>
-                    <td>rohy</td>
-                    <td><span id="aroh">0</span></td>
-                </tr>
-                <tr>
-                    <td><span id="hpri">0</span></td>
-                    <td>přihrávky</td>
-                    <td><span id="apri">0</span></td>
-                </tr>
-                <tr>
-                    <td><span id="hzak">0</span></td>
-                    <td>zakopnutý míč</td>
-                    <td><span id="azak">0</span></td>
-                </tr>
-            </table>
-            <span id="saved" style="font-weight:bold;"></span>
-            <input type="button" onclick="start()" id="matchStart" value="Zahájit utkání" />
-            <input type="button" onclick="end()" id="matchEnd" value="Ukončit utkání" style="display:none" />
-            <br />
-            <br />
-        </div>
+                    <table>
+                        <tr>
+                            <td><span id="hdm">0</span>%</td>
+                            <td>držení míče</td>
+                            <td><span id="adm">0</span>%</td>
+                        </tr>
+                        <tr>
+                            <td><span id="hroh">0</span></td>
+                            <td>rohy</td>
+                            <td><span id="aroh">0</span></td>
+                        </tr>
+                        <tr>
+                            <td><span id="hpri">0</span></td>
+                            <td>přihrávky</td>
+                            <td><span id="apri">0</span></td>
+                        </tr>
+                        <tr>
+                            <td><span id="hzak">0</span></td>
+                            <td>zakopnutý míč</td>
+                            <td><span id="azak">0</span></td>
+                        </tr>
+                    </table>
+                    <span id="saved" style="font-weight:bold;"></span>
+                    <input type="button" onclick="start()" id="matchStart" value="Zahájit utkání" />
+                    <input type="button" onclick="end()" id="matchEnd" value="Ukončit utkání" style="display:none" />
+                    <br />
+                    <br />
+                </div>
 
-
-        <div class="gameinfo">
-             <table>
-                <tr>
-                    <td>mřížka:</td>
-                    <td>
-                        <select id="grid" onchange="changeGrid(this.options[this.selectedIndex].value)">
-                            <option value="0">žádná</option>
-                            <option value="1" selected="selected">malé tečky</option>
-                            <option value="2">tečky</option>
-                            <option value="3">plná</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>rychlost:</td>
-                    <td>
-                        <select id="speed" onchange="changeSpeed(this.options[this.selectedIndex].value)">
-                            <option value="1500">pomalá</option>
-                            <option value="500" selected="selected">normální</option>
-                            <option value="10">velká</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        
-
-        
-       
+                <div class="gameinfo">
+                     <table>
+                        <tr>
+                            <td>mřížka:</td>
+                            <td>
+                                <select id="grid" onchange="changeGrid(this.options[this.selectedIndex].value)">
+                                    <option value="0">žádná</option>
+                                    <option value="1" selected="selected">malé tečky</option>
+                                    <option value="2">tečky</option>
+                                    <option value="3">plná</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>rychlost:</td>
+                            <td>
+                                <select id="speed" onchange="changeSpeed(this.options[this.selectedIndex].value)">
+                                    <option value="1500">pomalá</option>
+                                    <option value="500" selected="selected">normální</option>
+                                    <option value="10">velká</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 
-        <div style="display:none;">
-            <img src="zabava/goaltop.png" id="goalTopNet" alt="" />
-            <img src="zabava/goalbottom.png" id="goalBottomNet" alt="" />
-            <img src="images/smiles/x.gif" id="Img2" style="display:none;" alt="" />
-            <img src="images/smiles/gool.gif" id="sgool" style="display:none;" alt="" />
-            <img src="images/smiles/potlesk.gif" id="spotlesk" style="display:none;" alt="" />
-            <img src="images/smiles/nahoru.gif" id="snahoru" style="display:none;" alt=""  />
+                <div style="display:none;">
+                    <img src="zabava/goaltop.png" id="goalTopNet" alt="" />
+                    <img src="zabava/goalbottom.png" id="goalBottomNet" alt="" />
+                    <img src="images/smiles/x.gif" id="Img2" style="display:none;" alt="" />
+                    <img src="images/smiles/gool.gif" id="sgool" style="display:none;" alt="" />
+                    <img src="images/smiles/potlesk.gif" id="spotlesk" style="display:none;" alt="" />
+                    <img src="images/smiles/nahoru.gif" id="snahoru" style="display:none;" alt=""  />
+                </div>
+	        </div>
         </div>
 
-        <div style="clear:both">
+        <div data-role="page" id="settingsPage">
+
+	        <div data-role="header" data-theme="b">
+		        <h1>Settings</h1>
+		        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-notext" data-rel="back">Back</a>
+	        </div>
+
+	        <div data-role="content">	
+                <a href="#editTeams" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-icon-bullets ui-btn-icon-left">League and Team Editor</a>
+
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <a href="#restartDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left">Restart league</a>
+                            <div data-role="popup" id="restartDialog" data-dismissible="false" style="max-width:400px;">
+                                <div data-role="header">
+                                <h1>Restart league?</h1>
+                                </div>
+                                <div role="main" class="ui-content">
+                                    <p>Are you sure you want to restart league progress? This action cannot be undone.</p>
+                                    <div style="text-align:center">
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back">Cancel</a>
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back" id="restartLeague">Restart league</a>
+                                    </div>
+                                </div>
+                            </div>
+                    </fieldset>
+                </div>
+                	
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <a href="#resetDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left">Factory reset</a>
+                            <div data-role="popup" id="resetDialog" data-dismissible="false" style="max-width:400px;">
+                                <div data-role="header">
+                                <h1>Factory reset?</h1>
+                                </div>
+                                <div role="main" class="ui-content">
+                                    <p>Are you sure you want to reset all teams and game setting? This action cannot be undone.</p>
+                                    <div style="text-align:center">
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back">Cancel</a>
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back" id="resetDefaults">Factory reset</a>
+                                    </div>
+                                </div>
+                            </div>
+                    </fieldset>
+                </div>
+                
+                <div class="ui-field-contain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <a href="#leaguePage" class="ui-btn ui-btn-inline ui-shadow">Table</a>
+		                <a href="#matchPage" class="ui-btn ui-btn-inline ui-shadow">Matches</a>
+                    </fieldset>
+                </div>
+
+	        </div>
+            
+	        <div data-role="footer" data-theme="b">
+		        <h4>Page Footer</h4>
+	        </div>
         </div>
 
+        <div data-role="page" id="editTeams">
+	        <div data-role="header" data-theme="b">
+		        <h1>League and Team Editor</h1>
+                <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-notext">Back</a>
+	        </div>
 
-    </div>
-        
-        
-        <div data-role="footer" data-position="fixed" data-theme="b" style="text-align:center;padding:5px 0px;">
-            <a href="http://www.amitpatil.me/?s=iphone+ipad" data-theme="b" data-icon="star">More iphone Apps</a>
+	        <div data-role="content">	
+		        <p>Teams count: <strong id="editTeamsCount">0</strong> </p>
+                    
+                <div class="ui-corner-all custom-corners">
+                  <div class="ui-bar ui-bar-a">
+                    <h3>League settings</h3>
+                  </div>
+                  <div class="ui-body ui-body-a">
+                    
+                        <label for="editLeagueName">League name:</label>
+                        <input name="editLeagueName" id="editLeagueName" value="" type="text">
+
+                        <label for="editSelectedTeam">select team:</label>
+                        <select name="editSelectedTeam" id="editSelectedTeam" data-native-menu="false">
+                        </select>
+
+                        <button class="ui-btn ui-icon-check ui-btn-icon-left" id="editSaveBasic">Save</button>
+                  </div>
+                </div>
+
+                <br />
+
+                <div class="ui-corner-all custom-corners">
+                  <div class="ui-bar ui-bar-a">
+                    <h3>Edit Teams</h3>
+                  </div>
+                  <div class="ui-body ui-body-a">
+                    
+                    <label for="editTeamName">Team name:</label>
+                    <input name="editTeamName" id="editTeamName" value="" type="text">
+
+                    <label for="editShortName">Short name (3 letters):</label>
+                    <input name="editShortName" pattern="[A-Z]*" id="editShortName" value="" type="text">
+
+                    <label for="editSkillLevel">Skill level:</label>
+                    <input name="editSkillLevel" id="editSkillLevel" min="0" max="100" data-highlight="true" type="range">
+
+
+                    <div class="ui-field-contain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <button class="ui-btn ui-icon-arrow-l ui-btn-icon-left" id="editTeamPrev">Prev</button>	
+                            <button class="ui-btn ui-icon-check ui-btn-icon-left" id="editTeamSave">Save</button>
+                            <button class="ui-btn ui-icon-arrow-r ui-btn-icon-left" id="editTeamNext">Next</button>	
+                        </fieldset>
+                    </div>
+                  </div>
+                </div>
+
+                <br />
+
+
+
+                <div class="ui-corner-all custom-corners">
+                  <div class="ui-bar ui-bar-a">
+                    <h3>Actions</h3>
+                  </div>
+                  <div class="ui-body ui-body-a">
+                    <div class="ui-field-contain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <a href="#deleteAllDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left">Delete teams</a>
+                                <div data-role="popup" id="deleteAllDialog" data-dismissible="false" style="max-width:400px;">
+                                    <div data-role="header">
+                                    <h1>Delete all teams?</h1>
+                                    </div>
+                                    <div role="main" class="ui-content">
+                                        <p>Are you sure you want to delete all teams and league progress? This action cannot be undone.</p>
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-rel="back">Cancel</a>
+                                        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" id="editTeamDeleteAll" data-rel="back" data-transition="flow">Delete</a>
+                                    </div>
+                                </div>
+                            <button class="ui-btn ui-icon-plus ui-btn-icon-left" id="editTeamAdd">Add new team</button>
+                        </fieldset>
+                        * deleting and creating new teams will restart league.
+                    </div>
+                  </div>
+                </div>
+	        </div>
+            
+	        <div data-role="footer" data-theme="b">
+		        <h4>Page Footer</h4>
+	        </div>
         </div>
     </body>
+    <script type="text/javascript">
+        //settings page
+        $('#resetDefaults').bind("click", function () {
+            soccer.gameLoop.resetGameDefaults();
+        });
+
+        $('#restartLeague').bind("click", function () {
+            soccer.league.reset();
+            soccer.duel.reset();
+            soccer.gameLoop.startGame();
+        });
+        
+        //page ready
+        soccer.gameLoop.startGame();
+
+
+        $(document).delegate('.ui-page#leaguePage', 'pagebeforeshow', function () { soccer.leaguePage.pageshow(); });
+        $(document).delegate('.ui-page#leaguePage', 'pagebeforehide', function () { soccer.leaguePage.pagebeforehide(); });
+
+        $(document).delegate('.ui-page#matchPage', 'pagebeforeshow', function () { soccer.matchPage.pageshow(); });
+        $(document).delegate('.ui-page#matchPage', 'pagebeforehide', function () { soccer.matchPage.pagebeforehide(); });
+
+        $(document).delegate('.ui-page#editTeams', 'pagebeforeshow', function () { soccer.editClubPage.pageshow(); });
+        $(document).delegate('.ui-page#editTeams', 'pagebeforehide', function () { soccer.editClubPage.pagebeforehide(); });
+
+    </script>
 </html>
