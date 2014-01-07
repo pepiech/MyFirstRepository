@@ -4,8 +4,8 @@
         <title>Soccer League</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
-        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <link rel="stylesheet" href="source/jquery.mobile-1.4.0.min.css" />
+        <script type="text/javascript" src="source/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="source/common.js"></script>
         <script type="text/javascript" src="source/duel.js"></script>
         <script type="text/javascript" src="source/club.js"></script>
@@ -14,7 +14,7 @@
         <script type="text/javascript" src="source/matchPage.js"></script>
         <script type="text/javascript" src="source/editClubPage.js"></script>
         <script type="text/javascript" src="source/game.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+        <script type="text/javascript" src="source/jquery.mobile-1.4.0.min.js"></script>
         <link rel="stylesheet" href="source/styles.css" />
         
     </head>
@@ -22,6 +22,7 @@
         <div data-role="page" id="leaguePage" data-title="League Table">
 	        <div data-role="header" data-theme="b">
 		        <h1 id="leagueTitle"></h1>
+                
 		        <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-notext ui-btn-right">Settings</a>		        
 	        </div>
 	        <div data-role="content">	
@@ -48,6 +49,7 @@
                     <div class="ui-grid-b ui-responsive">
                         <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-forward ui-btn-icon-left" id="nextMatch">Next Match</button></div>
                         <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-left" id="resultMatch">Result</button></div>
+                        <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-forward ui-btn-icon-left" id="nextOwnMatch">Next Own Match</button></div>
                         <div class="ui-block-b"><button class="ui-btn ui-corner-all ui-icon-eye ui-btn-icon-left" id="viewMatch">View Match</button></div>
                         <div class="ui-block-c"><button class="ui-btn ui-corner-all ui-icon-video ui-btn-icon-left" id="playMatch">Play Match</button></div>
                     </div>
@@ -97,6 +99,10 @@
                     </tbody>
                 </table>
                 <div class="ui-field-contain">
+                    <div class="ui-grid-b ui-responsive">
+                        <div class="ui-block-a"><button class="ui-btn ui-corner-all ui-icon-forward ui-btn-icon-left" id="matchToNext">Go to next match</button></div>
+                    </div>
+
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <a href="#leaguePage" class="ui-btn ui-btn-inline ui-shadow">Table</a>
 		                <a href="#matchPage" class="ui-btn ui-btn-inline ui-shadow ui-btn-active">Matches</a>
@@ -214,7 +220,11 @@
 		        <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-notext" data-rel="back">Back</a>
 	        </div>
 
-	        <div data-role="content">	
+	        <div data-role="content">
+                <form>
+                    <label for="flip-checkbox">Flip toggle switch checkbox:</label>
+                    <input data-role="flipswitch" name="flip-checkbox" id="flip-checkbox" data-on-text="Light" data-off-text="Dark" data-wrapper-class="custom-label-flipswitch" type="checkbox">
+    	        </form>
                 <a href="#editTeams" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-icon-bullets ui-btn-icon-left">League and Team Editor</a>
 
                 <div class="ui-field-contain">

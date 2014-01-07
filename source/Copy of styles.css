@@ -1,0 +1,11 @@
+﻿table.league-table th, table.league-table td {padding:0.1em 0.2em}
+span.result {width:25px; display:inline-block;text-align:center; font-weight:bold}
+table.matches-table th, table.matches-table td {padding:0.1em 0.2em}
+
+
+        div.fcgame {float:left; width:402px; border:1px solid black;height:530px;}
+        div.gameinfo {float:left; border:1px solid black;text-align:center; width:200px; margin: 0 0 10px 10px}
+        div.team {font-size:14px;color:Red;}
+        div.time {font-size:14px;color:Red;}
+        .score {text-align:center;font-size:45px; padding:20px}
+        .score.gameover {color:Red;}

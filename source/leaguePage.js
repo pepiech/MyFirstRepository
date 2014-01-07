@@ -10,6 +10,7 @@ soccer.leaguePage = function () {
     var leagueHolder;
     var leagueEmptyHolder;
     var leagueEnded;
+    var nextOwnMatch;
 
     var leagueVisibility = function () {
         if (soccer.league.clubCount() == 0) {
@@ -28,6 +29,7 @@ soccer.leaguePage = function () {
         viewMatch.hide();
         playMatch.hide();
         leagueNextMatch.hide();
+        nextOwnMatch.hide();
         leagueEnded.show();
     }
 
@@ -52,6 +54,7 @@ soccer.leaguePage = function () {
                 playMatch.show();
             else
                 playMatch.hide();
+            nextOwnMatch.show();
             viewMatch.show();
         }
         else {
@@ -59,6 +62,7 @@ soccer.leaguePage = function () {
             resultMatch.hide();
             viewMatch.hide();
             playMatch.hide();
+            nextOwnMatch.hide();
         }
     }
 
@@ -75,6 +79,7 @@ soccer.leaguePage = function () {
         leagueHolder = $('#leagueHolder');
         leagueEmptyHolder = $('#leagueEmptyHolder');
         leagueEnded = $('#leagueEnded');
+        nextOwnMatch = $('#nextOwnMatch');
 
         $(resultMatch).bind("click", function () {
             var duel = soccer.duel.setCurrentDuelResult();
@@ -108,6 +113,12 @@ soccer.leaguePage = function () {
             soccer.leaguePage.pageshow();
             leagueEnded.hide();
             leagueNextMatch.show();
+            nextOwnMatch.show();
+        });
+
+        $(nextOwnMatch).bind("click", function () {
+            soccer.duel.computeUntilOwnMatch();
+            refreshUI();
         });
 
         elementsBound = true;

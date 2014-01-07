@@ -11,21 +11,23 @@ soccer.club = function () {
     var saveToStore = function () {
         var tosave = [];
         for (var i = 0; i < clubs.length; i++) {
-            tosave.push(clubs[i].id + '|' + clubs[i].name + '|' + clubs[i].short + '|' + clubs[i].ai);
+            tosave.push(clubs[i].name + '|' + clubs[i].ai);
         }
         localStorage.setItem("clubs", tosave.join(";"));
     }
 
     var parseFromStore = function () {
-        var stored = localStorage.getItem('clubs');
-        var storedClubs = stored.split(';');
+        parseClubs(localStorage.getItem('clubs'));
+    }
+
+    var parseClubs = function (data) {
+        var storedClubs = data.split(';');
         for (var i = 0; i < storedClubs.length; i++) {
             var data = storedClubs[i].split('|');
             clubs[i] = [];
-            clubs[i].id = data[0];
-            clubs[i].name = data[1];
-            clubs[i].short = data[2];
-            clubs[i].ai = parseInt(data[3]);
+            clubs[i].id = i + 1;
+            clubs[i].name = data[0];
+            clubs[i].ai = parseInt(data[1]);
         }
     }
 
@@ -37,7 +39,7 @@ soccer.club = function () {
             if (saved)
                 parseFromStore();
             else
-                clubs = defaultClubs;
+                parseClubs(defaultClubs);
             createIndex();
         },
         getAll: function () {

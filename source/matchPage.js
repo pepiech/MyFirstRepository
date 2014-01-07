@@ -1,6 +1,7 @@
 soccer.matchPage = function () {
     var matchesHolder;
     var onlyOwnDuels = true;
+    var matchToNext;
 
     var printDuels = function () {
         var newHTML = [];
@@ -35,7 +36,15 @@ soccer.matchPage = function () {
 
     var bindElements = function () {
         matchesHolder = $('#matchesHolder');
+        matchToNext = $('#matchToNext');
 
+        $(matchToNext).bind("click", function () {
+            soccer.duel.computeUntilOwnMatch();
+            $.mobile.changePage('#leaguePage', {
+                transition: 'fade',
+                changeHash: false
+            });
+        });
     }
 
     return {

@@ -185,13 +185,29 @@ soccer.duel = function () {
             else
                 return duels[nextDuel];
         },
+        computeUntilOwnMatch: function () {
+            var duel = this.getCurrentDuel();
+            if (!duel)
+                return;
+            if (typeof duel.resultHome != 'undefined') {
+                this.proceedToNextDuel();
+                duel = this.getCurrentDuel();
+            }
+
+            while (duel && duel.homeId != soccer.gameLoop.getPlayerTeamId() && duel.awayId != soccer.gameLoop.getPlayerTeamId()) {
+                var duel = soccer.duel.setCurrentDuelResult();
+                soccer.league.updateTable(duel);
+                this.proceedToNextDuel();
+                duel = this.getCurrentDuel();
+            }
+        },
         getCurrentDuelHtml: function () {
             var duel = this.getCurrentDuel();
             if (!duel)
                 return "";
             var newHTML = [];
             newHTML.push(soccer.club.getByID(duel.homeId).name);
-            if(typeof duel.resultHome == 'undefined')
+            if (typeof duel.resultHome == 'undefined')
                 newHTML.push('<span class="result"> - </span>');
             else
                 newHTML.push('<span class="result">' + duel.resultHome + ':' + duel.resultAway + '</span>');
